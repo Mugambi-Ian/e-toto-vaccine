@@ -32,7 +32,7 @@ export default class Home extends Component {
   async componentDidMount() {
     this.props.init();
     await _database
-      .ref(_auth.currentUser.uid)
+      .ref("users/" + _auth.currentUser.uid)
       .child("kids")
       .on("value", (x) => {
         const C = [];
@@ -306,6 +306,7 @@ export default class Home extends Component {
         closeSnack={this.props.closeSnack}
         openTimedSnack={this.props.openTimedSnack}
         child={this.state.openChild}
+        childInfo={this.state.childInfo}
         schedule={this.props.schedule}
         age={() => {
           return getAge(this.state.childInfo.birthDate);

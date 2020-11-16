@@ -1,32 +1,25 @@
 {
   "expo": {
-    "name": "e-toto-vaccine",
-    "slug": "e-toto-vaccine",
+    "name": "Toto Vaccine",
+    "slug": "toto-vaccine",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    "icon": "./assets/logo.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.verynice.totovaccine"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/logo.png"
+    },
+    "android": {
+      "package": "com.verynice.totovaccine"
+    },
+    "description": "An app to schedule and remind mothers of newly born babies of their vaccination schedule.",
+    "githubUrl": "https://github.com/Mugambi-Ian/e-toto-vaccine.git"
   }
 }

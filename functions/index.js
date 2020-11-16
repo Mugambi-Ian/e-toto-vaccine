@@ -43,14 +43,14 @@ const addEvent = (event, auth) => {
     );
   });
 };
-
+exports.createEvent = functions.
 exports.addEventToCalendar = functions.https.onRequest((request, response) => {
   return cors(request, response, () => {
     const eventData = {
-      eventName: request.body.eventName,
-      description: request.body.description,
-      startTime: request.body.startTime,
-      endTime: request.body.endTime,
+      eventName: "Firebase Event",
+      description: "This is a sample description",
+      startTime: "2020-12-01T10:00:00",
+      endTime: "2020-12-01T13:00:00",
     };
     const oAuth2Client = new OAuth2(
       googleCredentials.web.client_id,

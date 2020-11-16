@@ -61,7 +61,7 @@ export default class AddBaby extends Component {
       });
     } else {
       const key = (
-        await _database.ref(_auth.currentUser.uid).child("kids")
+        await _database.ref("users" + _auth.currentUser.uid).child("kids")
       ).push().key;
       console.log(key);
       this.setState({
@@ -292,7 +292,7 @@ export default class AddBaby extends Component {
                 };
                 if (childName && birthDate) {
                   await _database
-                    .ref(_auth.currentUser.uid)
+                    .ref("users/" + _auth.currentUser.uid)
                     .child("kids")
                     .child(childId)
                     .set(child)
