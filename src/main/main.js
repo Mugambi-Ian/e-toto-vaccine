@@ -10,31 +10,45 @@ import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import Splash from "./splash/splash";
 import { Snackbar } from "react-native-paper";
-import { _auth } from "../assets/config/config";
+import { _auth, _database } from "../assets/config/index";
 import { Login } from "../main/auth/login";
 import Home from "./app/home";
-import { enableExpoCliLogging } from "expo/build/logs/Logs";
+import Spinner from "react-native-loading-spinner-overlay";
 
 export default class App extends Component {
   state = {
     activeSplash: true,
-    startApp: false,
     authenticated: false,
     bypassAuth: false,
     snackBar: false,
     snackBarMsg: "",
     snackBarLabel: "",
-    loaded: false,
+    schedule: [],
     snackBarOnClick: () => {},
   };
-
+  getSortOrder(prop) {
+    return function (a, b) {
+      if (parseInt(a[prop]) > parseInt(b[prop])) {
+        return 1;
+      } else if (parseInt(a[prop]) < parseInt(b[prop])) {
+        return -1;
+      }
+      return 0;
+    };
+  }
   async componentDidMount() {
-    enableExpoCliLogging();
-    await _auth.onAuthStateChanged((u) => {
+    await _auth.onAuthStateChanged(async (u) => {
       if (this.state.activeSplash === false && this.state.loaded === false) {
         this.setState({ activeSplash: true });
       }
-      this.setState({ loaded: true, startApp: true });
+      const _a = [];
+      await _database.ref("schedule").on("value", (d) => {
+        d.forEach((x) => {
+          _a.push(x.val());
+        });
+      });
+      const _p = _a.sort(this.getSortOrder("numOfDays"));
+      this.setState({ loaded: true, startApp: true, schedule: _p });
       if (this.state.bypassAuth === false && u !== null) {
         this.setState({ authenticated: true });
       }
@@ -68,34 +82,31 @@ export default class App extends Component {
                 this.setState({ activeSplash: false, startApp: true });
             }}
           />
-        ) : this.state.startApp === true ? (
-          this.state.authenticated === false ? (
-            <Login
-              init={() => {
-                this.setState({ bypassAuth: true });
-              }}
-              authorizeUser={() => {
-                this.setState({ authenticated: true });
-              }}
-              openSnack={this.openSnack.bind(this)}
-              closeSnack={this.closeSnack.bind(this)}
-              openTimedSnack={this.openTimedSnack.bind(this)}
-            />
-          ) : (
-            <Home
-              init={() => {
-                this.setState({ bypassAuth: true });
-              }}
-              unauthorizeUser={() => {
-                this.setState({ authenticated: false });
-              }}
-              openSnack={this.openSnack.bind(this)}
-              closeSnack={this.closeSnack.bind(this)}
-              openTimedSnack={this.openTimedSnack.bind(this)}
-            />
-          )
+        ) : this.state.authenticated === false ? (
+          <Login
+            init={() => {
+              this.setState({ bypassAuth: true });
+            }}
+            authorizeUser={() => {
+              this.setState({ authenticated: true });
+            }}
+            openSnack={this.openSnack.bind(this)}
+            closeSnack={this.closeSnack.bind(this)}
+            openTimedSnack={this.openTimedSnack.bind(this)}
+          />
         ) : (
-          <View />
+          <Home
+            init={() => {
+              this.setState({ bypassAuth: true });
+            }}
+            unauthorizeUser={() => {
+              this.setState({ authenticated: false });
+            }}
+            openSnack={this.openSnack.bind(this)}
+            closeSnack={this.closeSnack.bind(this)}
+            openTimedSnack={this.openTimedSnack.bind(this)}
+            schedule={this.state.schedule}
+          />
         )}
         <Snackbar
           visible={this.state.snackBar}

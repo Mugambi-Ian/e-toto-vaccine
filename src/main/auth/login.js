@@ -12,7 +12,7 @@
 import React, { Component, useRef, useState } from "react";
 import * as Animatable from "react-native-animatable";
 import { fadeIn, fadeOut, slideInRight } from "../../assets/anim/index";
-import { firebaseConfig, _firebase } from "../../assets/config/config";
+import { _firebase } from "../../assets/config/index";
 import {
   BackHandler,
   Image,
@@ -23,6 +23,8 @@ import {
   View,
 } from "react-native";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { firebaseConfig } from "../../assets/config/config";
+import { StatusBar } from "expo-status-bar";
 class LoginContent extends Component {
   state = {
     phoneNumber: "",
@@ -51,7 +53,10 @@ class LoginContent extends Component {
         animation={this.state.closeLogin === false ? fadeIn : fadeOut}
         style={styles.mainContent}
       >
-        <Text style={styles.loginTitle}>Enter your phone number to get started</Text>
+        <StatusBar style="dark" />
+        <Text style={styles.loginTitle}>
+          Enter your phone number to get started
+        </Text>
         <Text style={styles.loginSubTitle}>
           We will send you a verification code.
         </Text>
@@ -140,6 +145,7 @@ class VerifyNumber extends Component {
         style={styles.mainContent}
         animation={this.props.closeLogin === false ? fadeIn : fadeOut}
       >
+        <StatusBar style="dark" />
         <Text style={styles.loginTitle}>Enter verification code</Text>
         <Text style={styles.loginSubTitle}>
           A code was sent to: {this.props.phoneNumber}

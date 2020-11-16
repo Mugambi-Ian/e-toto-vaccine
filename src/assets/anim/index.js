@@ -28,15 +28,10 @@ export const slideOutUp = {
 };
 export const slideOutDown = {
   0: {
-    opacity: 1,
     translateY: 0,
   },
-  0.5: {
-    opacity: 0.2,
-  },
   1: {
-    opacity: 0,
-    translateY: 500,
+    translateY: 1000,
   },
 };
 export const zoomIn = {
@@ -105,7 +100,7 @@ export const slideInRight = {
   0: {
     translateX: 500,
   },
-  1: { translateX: 0 },
+  1: { translateX: 0,  },
 };
 export const slideInLeft = {
   0: {

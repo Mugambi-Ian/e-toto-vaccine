@@ -9,15 +9,9 @@
 
 import React, { Component } from "react";
 import * as Animatable from "react-native-animatable";
-import {
-  slideInUp,
-  fadeIn,
-  fadeOut,
-  _slideOutLeft,
-  slideInLeft,
-  slideOutLeft,
-} from "../../assets/anim/index";
+import { fadeIn, _slideOutLeft, slideOutLeft } from "../../assets/anim/index";
 import { Image, StyleSheet } from "react-native";
+import { StatusBar } from "expo-status-bar";
 export default class Splash extends Component {
   state = {
     loadTitle: false,
@@ -27,7 +21,7 @@ export default class Splash extends Component {
     await setTimeout(async () => {
       this.setState({ closeSplash: true });
       await setTimeout(() => {
-         this.props.closeSplash();
+        this.props.closeSplash();
       }, 800);
     }, 2500);
   }
@@ -39,6 +33,7 @@ export default class Splash extends Component {
         animation={this.state.closeSplash === false ? fadeIn : slideOutLeft}
         style={styles.mainContent}
       >
+        <StatusBar style="light" />
         <Image
           source={require("../../assets/drawables/icons/logo.png")}
           style={styles.mainContentBackground}
