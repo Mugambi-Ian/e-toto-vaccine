@@ -152,15 +152,11 @@ export default class Home extends Component {
                       <View style={styles.babyImageCard}>
                         <Image
                           source={
-                            d.childDp === ""
-                              ? require("../../assets/drawables/icons/logo.png")
-                              : { uri: d.childDp }
+                            d.childDp
+                              ? { uri: d.childDp }
+                              : require("../../assets/drawables/icons/logo.png")
                           }
-                          style={
-                            d.childDp === ""
-                              ? styles.baybyIcon
-                              : styles.babyImage
-                          }
+                          style={d.childDp ? styles.babyImage : styles.babyIcon}
                         />
                       </View>
                       <TouchableOpacity

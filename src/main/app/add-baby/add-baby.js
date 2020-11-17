@@ -38,6 +38,7 @@ export default class AddBaby extends Component {
     childName: "",
     childId: "",
     birthDate: "",
+    gender: "",
     closeActive: false,
     disable: true,
     editMode: false,
